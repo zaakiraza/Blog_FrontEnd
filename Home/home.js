@@ -20,14 +20,14 @@ let userDescription = document.getElementById('userDescription');
 
 async function getSingle() {
     try {
-        const response = await fetch(`http://localhost:8000/users/${loginPerson}`);
+        const response = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
         const userData = await response.json();
         const { imgUrl, name, email, description } = userData?.data
         profilePic.src = imgUrl;
         userName.innerText = name;
         userEmail.innerText = email;
         userDescription.innerText = description;
-        const response2 = await fetch(`http://localhost:8000/posts`);
+        const response2 = await fetch(`https://blogbackend-6a9f.up.railway.app/posts`);
         const postData = await response2.json();
     }
     catch (e) {
@@ -46,7 +46,7 @@ async function postSomething() {
         return alert("Can't Post Empty");
     }
     try {
-        const userLoginData = await fetch(`http://localhost:8000/users/${loginPerson}`);
+        const userLoginData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
         const userLoginDataJson = await userLoginData.json()
         if (!media_file.value) {
             blogImgURL = "";
@@ -63,7 +63,7 @@ async function postSomething() {
             });
             blogImgURL = await blogPostUrl.json();
         }
-        const response = await fetch('http://localhost:8000/posts', {
+        const response = await fetch('https://blogbackend-6a9f.up.railway.app/posts', {
             method: 'POST',
             headers: {
                 Accept: 'application.json',
@@ -91,7 +91,7 @@ async function postSomething() {
 let blogsCount = document.getElementById('blogsCount');
 
 async function getPostCount() {
-    const response = await fetch(`http://localhost:8000/posts/postCount/${loginPerson}`);
+    const response = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/postCount/${loginPerson}`);
     const count = await response.json();
     blogsCount.innerText = count.postCount;
 }
@@ -100,7 +100,7 @@ getPostCount();
 
 let postData = [];
 async function getAllPost() {
-    const dataPost = await fetch(`http://localhost:8000/posts`);
+    const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts`);
     const dataPostJson = await dataPost.json();
     const postMainData = dataPostJson?.data;
     postMainData.forEach(elem => {

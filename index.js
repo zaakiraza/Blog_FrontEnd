@@ -31,7 +31,7 @@ async function signupHandler(e) {
         imgURL = await response.json();
         console.log(imgURL);
         }
-        const response = await fetch('http://localhost:8000/auth/signup', {
+        const response = await fetch('https://blogbackend-6a9f.up.railway.app/auth/signup', {
             method: 'POST',
             headers: {
                 Accept: 'application.json',
