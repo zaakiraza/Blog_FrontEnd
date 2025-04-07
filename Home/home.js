@@ -1,4 +1,3 @@
-import { config } from "../config.js";
 let loginPerson = localStorage.getItem('loginEmail');
 function checkLoginedUser() {
     if (!loginPerson) {
