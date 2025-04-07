@@ -53,7 +53,7 @@ async function signupHandler(e) {
         else {
             alert(feed.message);
                 localStorage.setItem('loginEmail', signupEmail.value);
-                window.location.href = '../home/home.html';
+                window.location.href = './Home/home.html';
         }
     }
     catch (e) {
