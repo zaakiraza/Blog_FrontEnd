@@ -1,4 +1,4 @@
-import { config } from "../config.js";
+import { config } from "./config.js";
 
 let signupName = document.getElementById('signupName');
 let signupEmail = document.getElementById('signupEmail');
