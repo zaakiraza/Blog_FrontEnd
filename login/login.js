@@ -29,7 +29,7 @@ async function loginHandler(e) {
         else{
             alert(feed.message);
             localStorage.setItem('loginEmail',loginEmail.value);
-            window.location.href='../home/home.html';
+            window.location.href='../Home/home.html';
         }
     }
     catch (e) {

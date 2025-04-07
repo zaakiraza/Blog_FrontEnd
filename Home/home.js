@@ -55,7 +55,7 @@ async function postSomething() {
             let fileInput = media_file.files[0];
             const formData = new FormData();
             formData.append('file', fileInput);
-            formData.append('upload_preset', config.UPLOAD_PRESET);
+            formData.append('upload_preset', "fireBase1");
             formData.append("folder", "Blogs");
             const blogPostUrl = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
                 method: 'POST',

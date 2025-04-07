@@ -1,5 +1,3 @@
-import { config } from "./config.js";
-
 let signupName = document.getElementById('signupName');
 let signupEmail = document.getElementById('signupEmail');
 let signupPassword = document.getElementById('signupPassword');
@@ -21,7 +19,7 @@ async function signupHandler(e) {
         console.log(fileInput);
         const formData = new FormData();
         formData.append('file', fileInput);
-        formData.append('upload_preset', config.UPLOAD_PRESET);
+        formData.append('upload_preset', "fireBase1");
         formData.append("folder", "ProfilePic");
         const response = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
             method: 'POST',
