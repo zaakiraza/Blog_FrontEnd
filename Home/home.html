@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
+    <script src="https://kit.fontawesome.com/c681fd371f.js" crossorigin="anonymous"></script>
+    <title>Home Page</title>
+</head>
+
+<body>
+
+    <div class="side-panel">
+        <img src="" alt="Profile" id="profilePic" class="profile-pic">
+        <div class="user-details">
+            <h2 id="userName"></h2>
+            <p id="userEmail"></p>
+            <p id="userDescription"></p>
+        </div>
+        <div class="stats">
+            <div>
+                Blogs:
+                <span id="blogsCount"></span>
+            </div>
+        </div>
+        <button id="LogoutBtn">LogOut</button>
+    </div>
+    <div class="post-container">
+        <div class="post-update" id="post-update">
+            <p id="open_Modal">What's on your mind?</p>
+        </div>
+        <div id="allPosts">
+        </div>
+    </div>
+
+    <div class="postModel" id="postModel">
+        <p id="crossBtn">x</p>
+        <textarea id="postContent" rows="15" cols="75" placeholder="What's on your mind?"></textarea>
+        <div class="post_opt">
+            <label for="media_file">+</label>
+            <input type="file" id="media_file" hidden>
+            <button id="postBtn">Post</button>
+        </div>
+    </div>
+
+
+    <script src="home.js" type="module"></script>
+</body>
+
+</html>
