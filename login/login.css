@@ -14,11 +14,13 @@ body {
     margin: 0;
 }
 
+/* LOGIN PAGE */
+
 .login-container {
     background: white;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    border-radius: 15px;
     width: 300px;
     text-align: center;
 }
@@ -30,11 +32,9 @@ body {
 .input-group {
     margin-bottom: 15px;
     text-align: left;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .input-group input,
@@ -46,6 +46,18 @@ body {
     color: #757575;
 }
 
+.input-group i:first-of-type {
+    display: none;
+}
+
+.input-group i {
+    position: relative;
+    right: 0;
+    padding-left: 7px;
+    cursor: pointer;
+}
+
+/* LOGIN AND SIGNUP BUTTON */
 #signupBtn,
 #loginBtn {
     width: 100%;
@@ -62,6 +74,21 @@ body {
     background: #0056b3;
 }
 
+.routing {
+    margin-top: 10px;
+}
+
+
+/* SIGNUP PAGE */
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
 .upload-icon {
     display: inline-block;
     text-align: left;
@@ -74,12 +101,4 @@ body {
     color: #757575;
     transition: background-color 0.3s ease, color 0.3s ease;
     margin: 10px 0;
-}
-
-input[type="file"] {
-    display: none;
-}
-
-.routing{
-    margin-top: 10px;
 }

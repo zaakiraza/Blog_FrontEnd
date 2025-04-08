@@ -11,6 +11,7 @@
 
 <body>
 
+    <!-- SIDE PANEL -->
     <div class="side-panel">
         <img src="" alt="Profile" id="profilePic" class="profile-pic">
         <div class="user-details">
@@ -25,7 +26,11 @@
             </div>
         </div>
         <button id="LogoutBtn">LogOut</button>
+        <br>
+        <button id="editProfileBtn">Edit Profile</button>
     </div>
+
+    <!-- INPUT OPEN MODEL -->
     <div class="post-container">
         <div class="post-update" id="post-update">
             <p id="open_Modal">What's on your mind?</p>
@@ -34,18 +39,53 @@
         </div>
     </div>
 
+    <!-- POST MODAL -->
     <div class="postModel" id="postModel">
         <p id="crossBtn">x</p>
-        <textarea id="postContent" rows="15" cols="75" placeholder="What's on your mind?"></textarea>
+        <textarea id="postContent" rows="15" cols="80" placeholder="What's on your mind?"></textarea>
         <div class="post_opt">
             <label for="media_file">+</label>
+            <button class="preview_post_btn" id="prevewBtn">Previw Post</button>
             <input type="file" id="media_file" hidden>
             <button id="postBtn">Post</button>
         </div>
     </div>
 
+    <!-- POST PREVIEW MODAL -->
+    <div class="preview_Post" id="preview_Post">
+        <div class="content_posts">
+            <div class="post_content">
+                <p id="previewText"></p>
+                <img id="previewImage" alt="Image">
+            </div>
+            <button id="backPreview">Back</button>
+        </div>
+    </div>
 
-    <script src="home.js" type="module"></script>
+    <!-- EDIT PROFILE MODAL -->
+    <div id="editProfile">
+        <div class="input-group">
+            <input type="text" id="editName" placeholder="Name" required>
+        </div>
+
+        <div class="input-group">
+            <label for="editImg" class="upload-icon">
+                <i class="fa-solid fa-upload"></i> Upload Image
+            </label>
+            <input id="editImg" type="file" required hidden>
+        </div>
+
+        <img id="previwProfilePic">
+
+        <div class="input-group">
+            <textarea id="editDes" rows="6" cols="44">Description</textarea>
+        </div>
+
+        <button type="submit" id="submitEditBtn">Save Changes</button>
+        <button type="submit" id="cancelEditBtn">Cancel</button>
+    </div>
+
+    <script src="home.js"></script>
 </body>
 
 </html>
