@@ -229,6 +229,7 @@ document.getElementById('editProfileBtn').addEventListener("click", async () => 
         editImgvalue = imgUrl;
         editDes.value = description;
         previwProfilePic.src = imgUrl;
+        profilePicURLUpdated = imgUrl;
     } catch (error) {
         console.log(error)
     }
@@ -240,23 +241,24 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
         return alert("Name is mandatory");
     }
     try {
-        if (editImg.value) {
-            let fileInput = editImg.files[0];
-            const formData = new FormData();
-            formData.append('file', fileInput);
-            formData.append('upload_preset', "fireBase1");
-            formData.append("folder", "ProfilePic");
-            const response = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
-                method: 'POST',
-                body: formData
-            });
+        document.getElementById('editImg').addEventListener('change', async (e) => {
+            if (editImg.value) {
+                let fileInput = editImg.files[0];
+                const formData = new FormData();
+                formData.append('file', fileInput);
+                formData.append('upload_preset', "fireBase1");
+                formData.append("folder", "ProfilePic");
+                const response = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
+                    method: 'POST',
+                    body: formData
+                });
 
-            profilePicURLUpdated = await response.json();
-            console.log(profilePicURLUpdated.secure_url);
-        }
+                profilePicURLUpdated = await response.json();
+            }
+        })
         // const response = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`, {
         const response = await fetch(`http://localhost:8000/users/${loginPerson}`, {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 Accept: 'application.json',
                 'Content-Type': 'application/json'
@@ -264,12 +266,13 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
             body: JSON.stringify({
                 updatedName: editName.value,
                 updatedDes: editDes.value || "No description added",
-                updatedImgURL: profilePicURLUpdated.secure_url || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
+                updatedImgURL: profilePicURLUpdated.secure_url || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
             })
         })
         const feed = await response.json();
         if (!feed.status) {
             alert(feed.message);
+            window.location.reload();
         }
         else {
             alert(feed.message);
@@ -277,7 +280,7 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
         }
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
     }
 })
 
