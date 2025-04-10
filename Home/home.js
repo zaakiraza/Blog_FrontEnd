@@ -23,8 +23,8 @@ let userEmail = document.getElementById('userEmail');
 let userDescription = document.getElementById('userDescription');
 async function getSingle() {
     try {
-        // const response = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
-        const response = await fetch(`http://localhost:8000/users/${loginPerson}`);
+        const response = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
+        // const response = await fetch(`http://localhost:8000/users/${loginPerson}`);
         const userData = await response.json();
         const { imgUrl, name, email, description } = userData?.data
         profilePic.src = imgUrl;
@@ -52,8 +52,8 @@ async function postSomething() {
         return alert("Can't Post Empty");
     }
     try {
-        // const userLoginData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
-        const userLoginData = await fetch(`http://localhost:8000/users/${loginPerson}`);
+        const userLoginData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
+        // const userLoginData = await fetch(`http://localhost:8000/users/${loginPerson}`);
         const userLoginDataJson = await userLoginData.json()
         if (!media_file.value) {
             blogImgURL = "";
@@ -70,8 +70,8 @@ async function postSomething() {
             });
             blogImgURL = await blogPostUrl.json();
         }
-        // const response = await fetch('https://blogbackend-6a9f.up.railway.app/posts', {
-        const response = await fetch('http://localhost:8000/posts', {
+        const response = await fetch('https://blogbackend-6a9f.up.railway.app/posts', {
+        // const response = await fetch('http://localhost:8000/posts', {
             method: 'POST',
             headers: {
                 Accept: 'application.json',
@@ -100,8 +100,8 @@ async function postSomething() {
 // GET POST COUNT OF LOGIN PERSON
 let blogsCount = document.getElementById('blogsCount');
 async function getPostCount() {
-    // const response = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/postCount/${loginPerson}`);
-    const response = await fetch(`http://localhost:8000/posts/postCount/${loginPerson}`);
+    const response = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/postCount/${loginPerson}`);
+    // const response = await fetch(`http://localhost:8000/posts/postCount/${loginPerson}`);
     const count = await response.json();
     blogsCount.innerText = count.postCount;
 }
@@ -111,8 +111,8 @@ getPostCount();
 // GET ALL POST
 let postData = [];
 async function getAllPost() {
-    // const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts`);
-    const dataPost = await fetch(`http://localhost:8000/posts`);
+    const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts`);
+    // const dataPost = await fetch(`http://localhost:8000/posts`);
     const dataPostJson = await dataPost.json();
     const postMainData = dataPostJson?.data;
     postMainData.forEach(elem => {
@@ -221,8 +221,8 @@ document.getElementById('editProfileBtn').addEventListener("click", async () => 
     document.getElementById('editProfile').style.display = "block"
     try {
         // CALL FOR LOGIN USER DATA
-        // const userData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
-        const userData = await fetch(`http://localhost:8000/users/${loginPerson}`);
+        const userData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
+        // const userData = await fetch(`http://localhost:8000/users/${loginPerson}`);
         const userDataJson = await userData.json();
         const { description, imgUrl, name } = userDataJson.data;
         editName.value = name;
@@ -256,8 +256,8 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
                 profilePicURLUpdated = await response.json();
             }
         })
-        // const response = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`, {
-        const response = await fetch(`http://localhost:8000/users/${loginPerson}`, {
+        const response = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`, {
+        // const response = await fetch(`http://localhost:8000/users/${loginPerson}`, {
             method: 'PATCH',
             headers: {
                 Accept: 'application.json',
