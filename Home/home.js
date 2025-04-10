@@ -304,3 +304,17 @@ document.getElementById('editImg').addEventListener('change', (e) => {
         document.getElementById('previwProfilePic').style.display = "none";
     }
 })
+
+// OPEN PROFILE MODAL
+document.getElementById('menuBtn').addEventListener("click", () => {
+    document.getElementById('side-panel').style.transition = 'all 10s forwards';
+    document.getElementById('side-panel').style.left = "0";
+    document.getElementById('preview_Post').style.display = "none";
+    document.getElementById('postModel').style.display = "none";
+})
+
+// CLOSE PROFILE MODAL
+document.getElementById('closeMenuBtn').addEventListener("click", () => {
+    document.getElementById('side-panel').style.left = "-15rem";
+    document.getElementById('side-panel').style.transition = 'all 10s forwards';
+})

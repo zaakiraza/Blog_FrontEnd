@@ -172,7 +172,7 @@ hr {
     width: 53%;
     position: absolute;
     background: #cdc8c8;
-    left: 24.8%;
+    left: 320px;
     top: 18%;
     border-radius: 15px;
     padding: 20px 30px;
@@ -194,6 +194,7 @@ hr {
     padding: 18px;
     border-radius: 16px;
     border: 1px solid black;
+    width: 100%;
 }
 
 .postModel textarea:focus {
@@ -332,4 +333,120 @@ input[type="file"] {
     position: relative;
     left: 20%;
     margin: 8px 0;
+}
+
+/* MENU BTN */
+#menuBtn {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 15px;
+}
+
+#closeMenuBtn {
+    display: none;
+    position: absolute;
+    right: 12px;
+}
+
+/* MEDIA QUERY */
+@media screen and (max-width: 900px) {
+    .side-panel {
+        width: 270px;
+    }
+
+    .post-container {
+        width: 60%;
+        margin-left: 290px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .side-panel {
+        width: 230px;
+        padding: 20px 10px;
+    }
+
+    .user-details p:first-of-type {
+        font-weight: 800;
+    }
+
+    .user-details p {
+        font-size: 14px;
+        padding: 0;
+    }
+
+    .post-container {
+        width: 100%;
+        margin-left: 245px;
+    }
+
+    .profile_content h1 {
+        font-size: 21px;
+    }
+
+    .post_content p {
+        font-size: 13px;
+    }
+
+    .post_content img {
+        height: 15rem;
+    }
+
+    .postModel,
+    .preview_Post,
+    #editProfile {
+        width: 60%;
+        left: 185px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .side-panel {
+        width: 230px;
+        padding: 20px 10px;
+        left: -15rem;
+    }
+
+    .post-container {
+        margin-left: 30px;
+    }
+
+    #menuBtn {
+        display: block;
+    }
+
+    .post-update p {
+        font-size: 14px;
+    }
+
+    #closeMenuBtn {
+        display: block;
+    }
+
+    .postModel,
+    .preview_Post,
+    #editProfile {
+        width: 80%;
+        left: 9%;
+    }
+
+    #preview_Post {
+        left: 3rem;
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+
+    #postBtn,
+    #backPreview,
+    .preview_post_btn {
+        font-size: 16px;
+        padding: 4px 15px;
+    }
+
+    .post_opt {
+        flex-wrap: wrap;
+    }
 }
