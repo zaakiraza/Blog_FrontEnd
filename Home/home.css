@@ -152,7 +152,7 @@ hr {
 
 .post_content p {
     padding: 15px 21px;
-    line-break: anywhere;
+    line-break: normal;
     line-height: 1.5;
 }
 
@@ -165,21 +165,35 @@ hr {
 
 
 /* POST MODAL */
+.posting {
+    display: none;
+}
+
+#postModel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
 .postModel,
 .preview_Post,
 #editProfile {
-    display: none;
+    /* display: none; */
     width: 53%;
     position: absolute;
-    background: #cdc8c8;
-    left: 320px;
+    background: white;   
+    left: 332px;
     top: 18%;
     border-radius: 15px;
     padding: 20px 30px;
-    box-shadow: 6px 6px 0px 0px gray;
     position: fixed;
+    transition: color 0.3s ease;
 }
 
+#editProfile{
+    background-color: #757575;
+}
 .postModel p {
     font-size: 25px;
     font-weight: 700;
@@ -258,12 +272,9 @@ hr {
 }
 
 /* PROFILE MODAL */
-#editProfile {
-    display: none;
-}
 
 .input-group {
-    margin-bottom: 15px;
+    width: 100%;
     text-align: left;
     display: flex;
     justify-content: center;
@@ -273,18 +284,28 @@ hr {
 .input-group input,
 .input-group textarea {
     width: 100%;
-    padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px;
     color: #757575;
+    padding: 15px 20px;
+    border-radius: 23px;
+    outline: none;
 }
 
 /* EDIT PROFILE MODAL */
 #editProfile {
+    display: none;
+    /* position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); */
+    display: none;
     width: 33%;
     left: 34%;
     top: 4%;
     box-shadow: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .input-group label {
@@ -292,14 +313,6 @@ hr {
     margin-bottom: 5px;
     border-radius: 23px;
 }
-
-.input-group input,
-.input-group textarea {
-    padding: 15px 20px;
-    border-radius: 23px;
-    outline: none;
-}
-
 
 input[type="file"] {
     display: none;
@@ -330,9 +343,8 @@ input[type="file"] {
 
 #previwProfilePic {
     width: 200px;
-    position: relative;
-    left: 20%;
     margin: 8px 0;
+    border-radius: 100px;
 }
 
 /* MENU BTN */

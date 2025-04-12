@@ -6,7 +6,7 @@ function checkLoginedUser() {
         window.location.href = '../login/login.html';
     }
 }
-checkLoginedUser();
+// checkLoginedUser();
 
 
 // LOGOUT BUTTON
@@ -31,15 +31,15 @@ async function getSingle() {
         userName.innerText = name;
         userEmail.innerText = email;
         userDescription.innerText = description;
-        // const response2 = await fetch(`https://blogbackend-6a9f.up.railway.app/posts`);
+        const response2 = await fetch(`https://blogbackend-6a9f.up.railway.app/posts`);
         // const response2 = await fetch(`http://localhost:8000/posts`);
-        // const postData = await response2.json();
+        const postData = await response2.json();
     }
     catch (e) {
         console.log(e)
     }
 }
-getSingle();
+// getSingle();
 
 
 // POST HANDLER
@@ -105,7 +105,7 @@ async function getPostCount() {
     const count = await response.json();
     blogsCount.innerText = count.postCount;
 }
-getPostCount();
+// getPostCount();
 
 
 // GET ALL POST
@@ -158,7 +158,7 @@ async function getAllPost() {
     postData = postData.join("")
     document.getElementById('allPosts').innerHTML = postData;
 }
-getAllPost();
+// getAllPost();
 
 
 // OPEN POST MODAL
@@ -218,21 +218,22 @@ let editDes = document.getElementById('editDes');
 let previwProfilePic = document.getElementById('previwProfilePic');
 let profilePicURLUpdated;
 document.getElementById('editProfileBtn').addEventListener("click", async () => {
-    document.getElementById('editProfile').style.display = "block"
-    try {
-        // CALL FOR LOGIN USER DATA
-        const userData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
-        // const userData = await fetch(`http://localhost:8000/users/${loginPerson}`);
-        const userDataJson = await userData.json();
-        const { description, imgUrl, name } = userDataJson.data;
-        editName.value = name;
-        editImgvalue = imgUrl;
-        editDes.value = description;
-        previwProfilePic.src = imgUrl;
-        profilePicURLUpdated = imgUrl;
-    } catch (error) {
-        console.log(error)
-    }
+    document.getElementById('editProfile').style.display = "flex"
+    // try {
+    //     // CALL FOR LOGIN USER DATA
+    //     const userData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
+    //     // const userData = await fetch(`http://localhost:8000/users/${loginPerson}`);
+    //     const userDataJson = await userData.json();
+    //     const { description, imgUrl, name } = userDataJson.data;
+    //     editName.value = name;
+    //     editImgvalue = imgUrl;
+    //     editDes.value = description;
+    //     previwProfilePic.src = imgUrl;
+    //     profilePicURLUpdated = imgUrl;
+    // } 
+    // catch (error) {
+    //     console.log(error)
+    // }
 })
 
 // UPDATE PROFILE INFO

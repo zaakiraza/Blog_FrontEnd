@@ -30,32 +30,34 @@ body {
 }
 
 .input-group {
-    margin-bottom: 15px;
-    text-align: left;
+    position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
+    margin-bottom: 15px;
 }
 
-.input-group input,
-.input-group textarea {
+.input-group input,textarea {
     width: 100%;
-    padding: 8px;
+    padding: 8px 40px 8px 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     color: #757575;
-}
-
-.input-group i:first-of-type {
-    display: none;
+    font-size: 16px;
+    outline: none;
 }
 
 .input-group i {
-    position: relative;
-    right: 0;
-    padding-left: 7px;
+    position: absolute;
+    right: 12px;
     cursor: pointer;
+    color: #888;
+    font-size: 18px;
 }
+
+#showPassword {
+    display: none;
+}
+
 
 /* LOGIN AND SIGNUP BUTTON */
 #signupBtn,
@@ -101,6 +103,16 @@ input[type="file"] {
     color: #757575;
     transition: background-color 0.3s ease, color 0.3s ease;
     margin: 10px 0;
+}
+
+.fa-upload {
+    display: flex !important;
+}
+
+#file-name {
+    text-align: left;
+    margin: 10px 0;
+    color: blue;
 }
 
 @media screen and (max-width: 320px) {

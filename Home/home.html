@@ -41,50 +41,56 @@
     </div>
 
     <!-- POST MODAL -->
-    <div class="postModel" id="postModel">
-        <p id="crossBtn">x</p>
-        <textarea id="postContent" rows="15" cols="80" placeholder="What's on your mind?"></textarea>
-        <div class="post_opt">
-            <label for="media_file">+</label>
-            <button class="preview_post_btn" id="prevewBtn">Previw Post</button>
-            <input type="file" id="media_file" hidden>
-            <button id="postBtn">Post</button>
+    <div class="posting" id="postModel">
+        <div class="postModel">
+            <p id="crossBtn">x</p>
+            <textarea id="postContent" rows="15" cols="80" placeholder="What's on your mind?"></textarea>
+            <div class="post_opt">
+                <label for="media_file">+</label>
+                <button class="preview_post_btn" id="prevewBtn">Previw Post</button>
+                <input type="file" id="media_file" hidden>
+                <button id="postBtn">Post</button>
+            </div>
         </div>
     </div>
 
     <!-- POST PREVIEW MODAL -->
-    <div class="preview_Post" id="preview_Post">
-        <div class="content_posts">
-            <div class="post_content">
-                <p id="previewText"></p>
-                <img id="previewImage" alt="Image">
+    <div class="posting" id="preview_Post">
+        <div class="preview_Post">
+            <div class="content_posts">
+                <div class="post_content">
+                    <p id="previewText"></p>
+                    <img id="previewImage" alt="Image">
+                </div>
+                <button id="backPreview">Back</button>
             </div>
-            <button id="backPreview">Back</button>
         </div>
     </div>
 
     <!-- EDIT PROFILE MODAL -->
-    <div id="editProfile">
-        <div class="input-group">
-            <input type="text" id="editName" placeholder="Name" required>
+    <!-- <div class="posting" id="editProfile"> -->
+        <div id="editProfile">
+            <div class="input-group">
+                <input type="text" id="editName" placeholder="Name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="editImg" class="upload-icon">
+                    <i class="fa-solid fa-upload"></i> Upload Image
+                </label>
+                <input id="editImg" type="file" required hidden>
+            </div>
+
+            <img id="previwProfilePic">
+
+            <div class="input-group">
+                <textarea id="editDes" rows="6" cols="44">Description</textarea>
+            </div>
+
+            <button type="submit" id="submitEditBtn">Save Changes</button>
+            <button type="submit" id="cancelEditBtn">Cancel</button>
         </div>
-
-        <div class="input-group">
-            <label for="editImg" class="upload-icon">
-                <i class="fa-solid fa-upload"></i> Upload Image
-            </label>
-            <input id="editImg" type="file" required hidden>
-        </div>
-
-        <img id="previwProfilePic">
-
-        <div class="input-group">
-            <textarea id="editDes" rows="6" cols="44">Description</textarea>
-        </div>
-
-        <button type="submit" id="submitEditBtn">Save Changes</button>
-        <button type="submit" id="cancelEditBtn">Cancel</button>
-    </div>
+    <!-- </div> -->
 
     <script src="home.js"></script>
 </body>

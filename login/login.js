@@ -6,8 +6,14 @@ let loginBtn = document.getElementById('loginBtn');
 loginBtn.addEventListener("click", loginHandler);
 async function loginHandler(e) {
     e.preventDefault();
-    if (!loginEmail || !loginPassword) {
-        alert("All Feilds are mandatory to fill");
+    if (!loginEmail.value || !loginPassword.value) {
+        if (!loginEmail.value) {
+            loginEmail.style.border = "2px solid red";
+        }
+        if (!loginPassword.value) {
+            loginPassword.style.border = "2px solid red";
+        }
+        return alert("All feilds are mandatory to fill");
     }
     try {
         const response = await fetch('https://blogbackend-6a9f.up.railway.app/auth/login', {
@@ -25,10 +31,10 @@ async function loginHandler(e) {
         const feed = await response.json();
         if (!feed.status) {
             alert(feed.message);
-            window.location.reload();
+            loginEmail.style.border = "2px solid red";
+            loginPassword.style.border = "2px solid red";
         }
         else {
-            alert(feed.message);
             localStorage.setItem('loginEmail', loginEmail.value);
             window.location.href = '../Home/home.html';
         }
@@ -42,6 +48,7 @@ async function loginHandler(e) {
 document.getElementById('showPassword').addEventListener('click', () => {
     loginPassword.type = "password";
     loginPassword.focus();
+    loginPassword.style.outline="none";
     document.getElementById('hidePassword').style.display = "block";
     document.getElementById('showPassword').style.display = "none";
 });
@@ -50,6 +57,20 @@ document.getElementById('showPassword').addEventListener('click', () => {
 document.getElementById('hidePassword').addEventListener('click', () => {
     loginPassword.type = "text";
     loginPassword.focus();
+    loginPassword.style.outline="none";
     document.getElementById('showPassword').style.display = "block";
     document.getElementById('hidePassword').style.display = "none";
 });
+
+// REMOVE RED BORDER
+loginEmail.addEventListener("change", () => {
+    if (loginEmail.value) {
+        loginEmail.style.border = "1px solid #ccc";
+    }
+})
+
+loginPassword.addEventListener("change", () => {
+    if (loginPassword.value) {
+        loginPassword.style.border = "1px solid #ccc";
+    }
+})

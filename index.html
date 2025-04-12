@@ -15,25 +15,26 @@
         <h2>SignUp</h2>
         <form>
             <div class="input-group">
-                <input type="text" id="signupName" placeholder="Name" required>
+                <input type="text" id="signupName" placeholder="Name">
             </div>
             <div class="input-group">
-                <input type="email" id="signupEmail" placeholder="Email" required>
-            </div>
-
+                <input type="email" id="signupEmail" placeholder="Email">
+            </div>  
+            
             <div class="input-group">
                 <label for="signUpImg" class="upload-icon">
                     <i class="fa-solid fa-upload"></i> Upload Image
                 </label>
-                <input id="signUpImg" type="file" required hidden>
+                <input id="signUpImg" type="file" hidden>
+            </div>
+            <p id="file-name"></p>
+
+            <div class="input-group">
+                <textarea id="signUpDes" rows="6" cols="44" placeholder="Description"></textarea>
             </div>
 
             <div class="input-group">
-                <textarea id="signUpDes" rows="6" cols="44">Description</textarea>
-            </div>
-
-            <div class="input-group">
-                <input type="password" id="signupPassword" placeholder="Password" required>
+                <input type="password" id="signupPassword" placeholder="Password">
                 <i class="fa-solid fa-eye-slash" id="showPassword"></i>
                 <i class="fa-solid fa-eye" id="hidePassword"></i>
             </div>

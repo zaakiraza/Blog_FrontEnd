@@ -5,27 +5,44 @@ let signupBtn = document.getElementById('signupBtn');
 let signUpImg = document.getElementById('signUpImg');
 let signUpDes = document.getElementById('signUpDes');
 let imgURL = "";
-
+let form = document.querySelector('form');
 // SIGNUP HANDLER
 signupBtn.addEventListener("click", signupHandler);
 async function signupHandler(e) {
-    e.preventDefault()
-    if (!signupName || !signupEmail || !signupPassword) {
-        return alert("All Feilds are mandatory to fill");
+    e.preventDefault();
+    if (!signupName.value || !signupEmail.value || !signupPassword.value || signupPassword.value.length < 8 || !signupEmail.value.includes("@")) {
+        if (!signupName.value) {
+            signupName.style.border = "2px solid red";
+        }
+        if (!signupEmail.value) {
+            signupEmail.style.border = "2px solid red";
+        }
+        if (!signupPassword.value || signupPassword.value.length < 8 || !signupEmail.value.includes("@")) {
+            signupPassword.style.border = "2px solid red";
+        }
+        return alert("Name, Email and Password(min lenght 8) are mandatory to fill");
     }
     try {
+        const checkForEmailInDB = await fetch(`https://blogbackend-6a9f.up.railway.app/auth/emailChecker/${signupEmail.value}`)
+        // const checkForEmailInDB = await fetch(`http://localhost:8000/auth/emailChecker/${signupEmail.value}`);
+        const checkForEmailInDBJson = await checkForEmailInDB.json();
+        if (!checkForEmailInDBJson.status) {
+            signupEmail.style.border = "2px solid red";
+            return alert(checkForEmailInDBJson.message);
+        }
+
         if (signUpImg.value) {
             let fileInput = signUpImg.files[0];
             const formData = new FormData();
             formData.append('file', fileInput);
             formData.append('upload_preset', "fireBase1");
             formData.append("folder", "ProfilePic");
-            const response = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
+            const UrlSecure = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
                 method: 'POST',
                 body: formData
             });
 
-            imgURL = await response.json();
+            imgURL = await UrlSecure.json();
         }
         const response = await fetch('https://blogbackend-6a9f.up.railway.app/auth/signup', {
         // const response = await fetch('http://localhost:8000/auth/signup', {
@@ -44,13 +61,11 @@ async function signupHandler(e) {
         })
         const feed = await response.json();
         if (!feed.status) {
-            alert(feed.message);
-            window.location.reload();
+            return alert(feed.message);
         }
         else {
             alert(feed.message);
-            localStorage.setItem('loginEmail', signupEmail.value);
-            window.location.href = './Home/home.html';
+            window.location.href = './login/login.html';
         }
     }
     catch (e) {
@@ -72,4 +87,33 @@ document.getElementById('hidePassword').addEventListener('click', () => {
     signupPassword.focus();
     document.getElementById('showPassword').style.display = "block";
     document.getElementById('hidePassword').style.display = "none";
+});
+
+// SIGNUP FEILDS ONCHANGE TEXT COLOR CHANGE
+signupName.addEventListener("change", () => {
+    if (signupName.value) {
+        signupName.style.border = "1px solid #ccc";
+    }
+})
+signupEmail.addEventListener("change", () => {
+    if (signupEmail.value) {
+        signupEmail.style.border = "1px solid #ccc";
+    }
+})
+signupPassword.addEventListener("change", () => {
+    if (signupPassword.value) {
+        signupPassword.style.border = "1px solid #ccc";
+    }
+})
+
+// SignUp Img
+document.getElementById("signUpImg").addEventListener("click", function () {
+    document.getElementById("signUpImg").click();
+});
+
+document.getElementById("signUpImg").addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        document.getElementById("file-name").textContent = "Uploaded File: " + file.name;
+    }
 });
