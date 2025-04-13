@@ -20,60 +20,75 @@ body {
     border-radius: 10px;
     height: 100vh;
     position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .profile-pic {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto;
 }
 
 .user-details {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.user-details h2 {
-    margin: 10px 0 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
 }
 
 .user-details p {
     color: gray;
-    margin: 5px 0;
 }
 
 .stats {
-    margin-top: 15px;
-    padding-top: 10px;
     border-top: 1px solid #ddd;
+    padding-top: 12px;
+    width: 100%;
 }
 
 .stats div {
     display: flex;
+    gap: 4px;
 }
 
 .stats span {
     font-weight: bold;
-    display: block;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    gap: 10px;
 }
 
 #LogoutBtn,
-#editProfileBtn,
+#editProfileBtn {
+    padding: 5px 20px;
+    background: transparent;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+#LogoutBtn:hover,
+#editProfileBtn:hover {
+    box-shadow: 0 4px black;
+}
+
+/* SIDE PANEL */
+
 #submitEditBtn,
 #cancelEditBtn {
     padding: 5px 20px;
     background: transparent;
     border: 1px solid black;
     border-radius: 6px;
-    margin-top: 12px;
 }
 
 #postBtn:hover,
-#LogoutBtn:hover,
-#editProfileBtn:hover,
 #submitEditBtn:hover,
 #cancelEditBtn:hover {
     box-shadow: 0 4px black;
@@ -92,13 +107,14 @@ body {
     justify-content: center;
     padding: 20px;
     flex-direction: column;
+    gap: 40px;
 }
 
 
 .post-update {
     padding: 10px;
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     background: white;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 11px;
@@ -106,20 +122,26 @@ body {
 
 .post-update p {
     cursor: pointer;
-    width: 100%;
+    /* width: 100%; */
     padding: 10px;
     border: 1px solid gainsboro;
     border-radius: 5px;
-    resize: none;
-    outline: none;
+    /* resize: none; */
+    /* outline: none; */
 }
 
 
 /* ALL POSTS */
+#allPosts {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
 .content_posts {
     border: 2px solid gray;
     border-radius: 15px;
-    margin: 30px 0;
+    /* margin: 30px 0; */
     box-shadow: 5px 5px 8px 2px gray;
 }
 
@@ -162,6 +184,7 @@ hr {
     border-bottom-right-radius: 14px;
     border-bottom-left-radius: 14px;
 }
+/* INPUT OPEN MODEL */
 
 
 /* POST MODAL */
@@ -182,7 +205,7 @@ hr {
     /* display: none; */
     width: 53%;
     position: absolute;
-    background: white;   
+    background: white;
     left: 332px;
     top: 18%;
     border-radius: 15px;
@@ -191,9 +214,10 @@ hr {
     transition: color 0.3s ease;
 }
 
-#editProfile{
+#editProfile {
     background-color: #757575;
 }
+
 .postModel p {
     font-size: 25px;
     font-weight: 700;

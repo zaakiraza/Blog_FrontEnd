@@ -11,24 +11,26 @@
 
 <body>
     <!-- SIDE PANEL -->
-    <h1 id="menuBtn">X</h1>
+    <h1 id="menuBtn"><i class="fa-solid fa-bars"></i></h1>
     <div class="side-panel" id="side-panel">
         <h1 id="closeMenuBtn">X</h1>
-        <img src="" alt="Profile" id="profilePic" class="profile-pic">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
+            alt="Profile" id="profilePic" class="profile-pic">
         <div class="user-details">
-            <h2 id="userName"></h2>
-            <p id="userEmail"></p>
-            <p id="userDescription"></p>
+            <h2 id="userName">Zakir</h2>
+            <p id="userEmail">zaakiraza110@gmail.com</p>
+            <p id="userDescription">No description added</p>
         </div>
         <div class="stats">
             <div>
                 Blogs:
-                <span id="blogsCount"></span>
+                <span id="blogsCount">0</span>
             </div>
         </div>
-        <button id="LogoutBtn">LogOut</button>
-        <br>
-        <button id="editProfileBtn">Edit Profile</button>
+        <div class="btns">
+            <button id="LogoutBtn">LogOut</button>
+            <button id="editProfileBtn">Edit Profile</button>
+        </div>
     </div>
 
     <!-- INPUT OPEN MODEL -->
@@ -37,11 +39,46 @@
             <p id="open_Modal">What's on your mind?</p>
         </div>
         <div id="allPosts">
+            <div class="content_posts">
+                <div class="profile">
+                    <div class="profile_img">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
+                            alt="Image">
+                    </div>
+                    <div class="profile_content">
+                        <h1>Raza</h1>
+                        <h4>raaza.zaakir@gmail.com</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="post_content">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis illum cupiditate iure
+                        repellat excepturi totam suscipit sequi ipsa optio in!</p>
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
+                        alt="Image">
+                </div>
+            </div>
+            <div class="content_posts">
+                <div class="profile">
+                    <div class="profile_img">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
+                            alt="Image">
+                    </div>
+                    <div class="profile_content">
+                        <h1>Zakir</h1>
+                        <h4>zaakiraza110@gmail.com</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="post_content">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, quisquam!</p>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- POST MODAL -->
-    <div class="posting" id="postModel">
+    <!-- <div class="posting" id="postModel">
         <div class="postModel">
             <p id="crossBtn">x</p>
             <textarea id="postContent" rows="15" cols="80" placeholder="What's on your mind?"></textarea>
@@ -52,10 +89,10 @@
                 <button id="postBtn">Post</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- POST PREVIEW MODAL -->
-    <div class="posting" id="preview_Post">
+    <!-- <div class="posting" id="preview_Post">
         <div class="preview_Post">
             <div class="content_posts">
                 <div class="post_content">
@@ -65,11 +102,11 @@
                 <button id="backPreview">Back</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- EDIT PROFILE MODAL -->
     <!-- <div class="posting" id="editProfile"> -->
-        <div id="editProfile">
+    <!-- <div id="editProfile">
             <div class="input-group">
                 <input type="text" id="editName" placeholder="Name" required>
             </div>
@@ -89,7 +126,7 @@
 
             <button type="submit" id="submitEditBtn">Save Changes</button>
             <button type="submit" id="cancelEditBtn">Cancel</button>
-        </div>
+        </div> -->
     <!-- </div> -->
 
     <script src="home.js"></script>
