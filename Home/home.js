@@ -8,7 +8,6 @@ function checkLoginedUser() {
 }
 checkLoginedUser();
 
-
 // LOGOUT BUTTON
 document.getElementById('LogoutBtn').addEventListener("click", () => {
     localStorage.clear("loginEmail");
@@ -21,25 +20,28 @@ let profilePic = document.getElementById('profilePic');
 let userName = document.getElementById('userName');
 let userEmail = document.getElementById('userEmail');
 let userDescription = document.getElementById('userDescription');
-async function getSingle() {
+async function getSingleUserData() {
     try {
-        const response = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
-        // const response = await fetch(`http://localhost:8000/users/${loginPerson}`);
-        const userData = await response.json();
-        const { imgUrl, name, email, description } = userData?.data
+        const loginUserData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
+        // const loginUserData = await fetch(`http://localhost:8000/users/${loginPerson}`);
+        const loginUserDataJson = await loginUserData.json();
+        const { imgUrl, name, email, description } = loginUserDataJson.data;
         profilePic.src = imgUrl;
         userName.innerText = name;
         userEmail.innerText = email;
         userDescription.innerText = description;
-        const response2 = await fetch(`https://blogbackend-6a9f.up.railway.app/posts`);
-        // const response2 = await fetch(`http://localhost:8000/posts`);
-        const postData = await response2.json();
+        document.getElementById('menuBtn').src = imgUrl;
+
+        const loginUserPostCount = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/singlePostCount/${loginPerson}`);
+        // const loginUserPostCount = await fetch(`http://localhost:8000/posts/singlePostCount/${loginPerson}`);
+        const loginUserPostCountJson = await loginUserPostCount.json();
+        document.getElementById('blogsCount').innerText = loginUserPostCountJson.postCount;
     }
     catch (e) {
         console.log(e)
     }
 }
-getSingle();
+getSingleUserData();
 
 
 // POST HANDLER
@@ -52,9 +54,6 @@ async function postSomething() {
         return alert("Can't Post Empty");
     }
     try {
-        const userLoginData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
-        // const userLoginData = await fetch(`http://localhost:8000/users/${loginPerson}`);
-        const userLoginDataJson = await userLoginData.json()
         if (!media_file.value) {
             blogImgURL = "";
         }
@@ -80,9 +79,7 @@ async function postSomething() {
             body: JSON.stringify({
                 postText: postContent.value,
                 postImgUrl: blogImgURL.secure_url,
-                posterEmail: loginPerson,
-                posterName: userLoginDataJson?.data?.name,
-                posterImgUrl: userLoginDataJson?.data?.imgUrl
+                posterEmail: loginPerson
             })
         })
         const feed = await response.json();
@@ -97,54 +94,92 @@ async function postSomething() {
 }
 
 
-// GET POST COUNT OF LOGIN PERSON
-let blogsCount = document.getElementById('blogsCount');
-async function getPostCount() {
-    const response = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/postCount/${loginPerson}`);
-    // const response = await fetch(`http://localhost:8000/posts/postCount/${loginPerson}`);
-    const count = await response.json();
-    blogsCount.innerText = count.postCount;
-}
-getPostCount();
-
-
 // GET ALL POST
 let postData = [];
 async function getAllPost() {
-    const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts`);
-    // const dataPost = await fetch(`http://localhost:8000/posts`);
+    const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/allPost`);
+    // const dataPost = await fetch(`http://localhost:8000/posts/allPost`);
     const dataPostJson = await dataPost.json();
     const postMainData = dataPostJson?.data;
-    postMainData.forEach(elem => {
+    if (postMainData.length == 0) {
+        document.getElementById('allPosts').innerHTML = "<h1 class='noPostHeading'>No Post avaliable</h1>";
+        return;
+    }
+    // postMainData.forEach(async (elem) => {
+    //     const userData = await fetch(`http://localhost:8000/users/${elem?.email}`);
+    //     const userDataJson = await userData.json();
+    //     if (elem.postUrl) {
+    //         let formattedText = elem.text.replace(/\n/g, "<br>");
+    //         postData.push(`
+    //             <div class="content_posts">
+    //                 <div class="profile">
+    //                     <div class="profile_img">
+    //                         <img src="${userDataJson?.data?.imgUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
+    //                     </div>
+    //                     <div class="profile_content">
+    //                         <h1>${userDataJson?.data?.name}</h1>
+    //                         <h4>${elem?.email}</h4>
+    //                     </div>
+    //                 </div>
+    //                 <hr>
+    //                 <div class="post_content">
+    //                     <p>${formattedText}</p>
+    //                     <img src="${elem?.postUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
+    //                 </div>
+    //             </div>`)
+    //     }
+    //     else {
+    //         postData.push(`
+    //             <div class="content_posts">
+    //                 <div class="profile">
+    //                     <div class="profile_img">
+    //                         <img src="${userDataJson?.data?.imgUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
+    //                     </div>
+    //                     <div class="profile_content">
+    //                         <h1>${userDataJson?.data?.name}</h1>
+    //                         <h4>${elem?.email}</h4>
+    //                     </div>
+    //                 </div>
+    //                 <hr>
+    //                 <div class="post_content">
+    //                     <p>${elem?.text}</p>
+    //                 </div>
+    //             </div>`)
+    //     }
+    // });
+
+    for (const elem of postMainData) {
+        const userData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${elem.email}`);
+        // const userData = await fetch(`http://localhost:8000/users/${elem.email}`);
+        const userDataJson = await userData.json();
         if (elem.postUrl) {
             let formattedText = elem.text.replace(/\n/g, "<br>");
             postData.push(`
                 <div class="content_posts">
                     <div class="profile">
                         <div class="profile_img">
-                            <img src="${elem?.ImgUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
+                            <img src="${userDataJson?.data?.imgUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
                         </div>
                         <div class="profile_content">
-                            <h1>${elem?.name}</h1>
+                            <h1>${userDataJson?.data?.name}</h1>
                             <h4>${elem?.email}</h4>
                         </div>
                     </div>
                     <hr>
                     <div class="post_content">
                         <p>${formattedText}</p>
-                        <img src="${elem?.postUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
+                        <img src="${elem?.postUrl}" alt="Image">
                     </div>
-                </div>`)
-        }
-        else {
+                </div>`);
+        } else {
             postData.push(`
                 <div class="content_posts">
                     <div class="profile">
                         <div class="profile_img">
-                            <img src="${elem?.ImgUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
+                            <img src="${userDataJson?.data?.imgUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
                         </div>
                         <div class="profile_content">
-                            <h1>${elem?.name}</h1>
+                            <h1>${userDataJson?.data?.name}</h1>
                             <h4>${elem?.email}</h4>
                         </div>
                     </div>
@@ -152,11 +187,10 @@ async function getAllPost() {
                     <div class="post_content">
                         <p>${elem?.text}</p>
                     </div>
-                </div>`)
+                </div>`);
         }
-    });
-    postData = postData.join("")
-    document.getElementById('allPosts').innerHTML = postData;
+    }
+    document.getElementById('allPosts').innerHTML = postData.join("");
 }
 getAllPost();
 
@@ -164,7 +198,7 @@ getAllPost();
 // OPEN POST MODAL
 document.getElementById('open_Modal').addEventListener("click", () => {
     document.body.style.backgroundColor = "#ebebeb";
-    document.body.style.overflow = "hidden"
+    // document.body.style.overflow = "hidden"
     document.getElementById('postModel').style.display = "block";
 })
 
@@ -183,6 +217,7 @@ document.getElementById('media_file').addEventListener('change', (e) => {
         reader.onload = function (e) {
             document.getElementById('previewImage').style.display = "block";
             document.getElementById('previewImage').src = e.target.result;
+            document.getElementById('ImgName').innerText = media_file.files[0].name;
         };
         reader.readAsDataURL(preview_file);
     }
@@ -218,7 +253,7 @@ let editDes = document.getElementById('editDes');
 let previwProfilePic = document.getElementById('previwProfilePic');
 let profilePicURLUpdated;
 document.getElementById('editProfileBtn').addEventListener("click", async () => {
-    document.getElementById('editProfile').style.display = "flex"
+    document.getElementById('edit_profile_whole').style.display = "block"
     try {
         // CALL FOR LOGIN USER DATA
         const userData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`);
@@ -226,11 +261,11 @@ document.getElementById('editProfileBtn').addEventListener("click", async () => 
         const userDataJson = await userData.json();
         const { description, imgUrl, name } = userDataJson.data;
         editName.value = name;
-        editImgvalue = imgUrl;
+        // editImg.value = imgUrl;
         editDes.value = description;
         previwProfilePic.src = imgUrl;
         profilePicURLUpdated = imgUrl;
-    } 
+    }
     catch (error) {
         console.log(error)
     }
@@ -242,7 +277,7 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
         return alert("Name is mandatory");
     }
     try {
-        document.getElementById('editImg').addEventListener('change', async (e) => {
+        // document.getElementById('editImg').addEventListener('change', async (e) => {
             if (editImg.value) {
                 let fileInput = editImg.files[0];
                 const formData = new FormData();
@@ -256,10 +291,10 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
 
                 profilePicURLUpdated = await response.json();
             }
-        })
+        // })
         const response = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${loginPerson}`, {
-        // const response = await fetch(`http://localhost:8000/users/${loginPerson}`, {
-            method: 'PATCH',
+            // const response = await fetch(`http://localhost:8000/users/${loginPerson}`, {
+            method: 'PUT',
             headers: {
                 Accept: 'application.json',
                 'Content-Type': 'application/json'
@@ -287,7 +322,7 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
 
 // CLOSE PROFILE MODAL
 document.getElementById('cancelEditBtn').addEventListener("click", () => {
-    document.getElementById('editProfile').style.display = "none";
+    document.getElementById('edit_profile_whole').style.display = "none";
 })
 
 // SET IMAGE PREVIEW VALUE

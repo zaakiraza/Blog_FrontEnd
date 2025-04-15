@@ -6,72 +6,101 @@ let signUpImg = document.getElementById('signUpImg');
 let signUpDes = document.getElementById('signUpDes');
 let imgURL = "";
 let form = document.querySelector('form');
+
 // SIGNUP HANDLER
 signupBtn.addEventListener("click", signupHandler);
+
+function showError(input, errorId, message) {
+    input.style.border = "2px solid red";
+    document.getElementById(errorId).innerText = message;
+}
+
 async function signupHandler(e) {
     e.preventDefault();
-    if (!signupName.value || !signupEmail.value || !signupPassword.value || signupPassword.value.length < 8 || !signupEmail.value.includes("@")) {
-        if (!signupName.value) {
-            signupName.style.border = "2px solid red";
-        }
-        if (!signupEmail.value) {
-            signupEmail.style.border = "2px solid red";
-        }
-        if (!signupPassword.value || signupPassword.value.length < 8 || !signupEmail.value.includes("@")) {
-            signupPassword.style.border = "2px solid red";
-        }
-        return alert("Name, Email and Password(min lenght 8) are mandatory to fill");
-    }
-    try {
-        const checkForEmailInDB = await fetch(`https://blogbackend-6a9f.up.railway.app/auth/emailChecker/${signupEmail.value}`)
-        // const checkForEmailInDB = await fetch(`http://localhost:8000/auth/emailChecker/${signupEmail.value}`);
-        const checkForEmailInDBJson = await checkForEmailInDB.json();
-        if (!checkForEmailInDBJson.status) {
-            signupEmail.style.border = "2px solid red";
-            return alert(checkForEmailInDBJson.message);
-        }
 
-        if (signUpImg.value) {
-            let fileInput = signUpImg.files[0];
-            const formData = new FormData();
-            formData.append('file', fileInput);
-            formData.append('upload_preset', "fireBase1");
-            formData.append("folder", "ProfilePic");
-            const UrlSecure = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
+    const name = signupName.value.trim();
+    const email = signupEmail.value.trim();
+    const password = signupPassword.value;
+
+    let isValid = true;
+
+    if (!name) {
+        showError(signupName, 'errorName', 'Name is mandatory');
+        isValid = false;
+    }
+
+    if (!email) {
+        showError(signupEmail, 'errorEmail', 'Email is mandatory');
+        isValid = false;
+    }
+    else if (!email.includes('@')) {
+        showError(signupEmail, 'errorEmail', 'Invalid Email');
+        isValid = false;
+    }
+
+    if (!password) {
+        showError(signupPassword, 'errorPassword', 'Password is mandatory');
+        isValid = false;
+    }
+    else if (password.length < 8) {
+        showError(signupPassword, 'errorPassword', 'Minimum length should be 8');
+        isValid = false;
+    }
+
+    if (!isValid) return;
+
+    else if (isValid) {
+        try {
+            const checkForEmailInDB = await fetch(`https://blogbackend-6a9f.up.railway.app/auth/emailChecker/${signupEmail.value}`)
+            // const checkForEmailInDB = await fetch(`http://localhost:8000/auth/emailChecker/${signupEmail.value}`);
+            const checkForEmailInDBJson = await checkForEmailInDB.json();
+            if (!checkForEmailInDBJson.status) {
+                return showError(signupEmail, 'errorEmail', 'Email Already Exist');
+            }
+
+            if (signUpImg.value) {
+                let fileInput = signUpImg.files[0];
+                const formData = new FormData();
+                formData.append('file', fileInput);
+                formData.append('upload_preset', "fireBase1");
+                formData.append("folder", "ProfilePic");
+                const UrlSecure = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                imgURL = await UrlSecure.json();
+            }
+            const response = await fetch('https://blogbackend-6a9f.up.railway.app/auth/signup', {
+            // const response = await fetch('http://localhost:8000/auth/signup', {
                 method: 'POST',
-                body: formData
-            });
-
-            imgURL = await UrlSecure.json();
-        }
-        const response = await fetch('https://blogbackend-6a9f.up.railway.app/auth/signup', {
-        // const response = await fetch('http://localhost:8000/auth/signup', {
-            method: 'POST',
-            headers: {
-                Accept: 'application.json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                signupName: signupName.value,
-                signupEmail: signupEmail.value,
-                signUpDes: signUpDes.value || "No description added",
-                signupImgURL: imgURL.secure_url || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
-                signupPassword: signupPassword.value
+                headers: {
+                    Accept: 'application.json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    signupName: signupName.value,
+                    signupEmail: signupEmail.value.toLocaleLowerCase(),
+                    signUpDes: signUpDes.value || "No description added",
+                    signupImgURL: imgURL.secure_url || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
+                    signupPassword: signupPassword.value
+                })
             })
-        })
-        const feed = await response.json();
-        if (!feed.status) {
-            return alert(feed.message);
+            const feed = await response.json();
+            if (!feed.status) {
+                return alert(feed.message);
+            }
+            else {
+                alert(feed.message);
+                window.location.href = './login/login.html';
+            }
         }
-        else {
-            alert(feed.message);
-            window.location.href = './login/login.html';
+        catch (e) {
+            console.log(e);
         }
-    }
-    catch (e) {
-        console.log(e);
     }
 }
+
 
 // SIGNUP SHOW PASSWORD
 document.getElementById('showPassword').addEventListener('click', () => {
@@ -93,16 +122,19 @@ document.getElementById('hidePassword').addEventListener('click', () => {
 signupName.addEventListener("change", () => {
     if (signupName.value) {
         signupName.style.border = "1px solid #ccc";
+        document.getElementById('errorName').innerText = "";
     }
 })
 signupEmail.addEventListener("change", () => {
     if (signupEmail.value) {
         signupEmail.style.border = "1px solid #ccc";
+        document.getElementById('errorEmail').innerText = "";
     }
 })
 signupPassword.addEventListener("change", () => {
     if (signupPassword.value) {
         signupPassword.style.border = "1px solid #ccc";
+        document.getElementById('errorPassword').innerText = "";
     }
 })
 

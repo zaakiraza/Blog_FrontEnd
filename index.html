@@ -17,15 +17,19 @@
             <div class="input-group">
                 <input type="text" id="signupName" placeholder="Name">
             </div>
+            <p id="errorName"></p>
+
             <div class="input-group">
                 <input type="email" id="signupEmail" placeholder="Email">
-            </div>  
+            </div>
+            <p id="errorEmail"></p>
             
             <div class="input-group">
                 <label for="signUpImg" class="upload-icon">
-                    <i class="fa-solid fa-upload"></i> Upload Image
+                    <i class="fa-solid fa-upload"></i> 
+                    Upload Image
                 </label>
-                <input id="signUpImg" type="file" hidden>
+                <input id="signUpImg" type="file">
             </div>
             <p id="file-name"></p>
 
@@ -38,6 +42,8 @@
                 <i class="fa-solid fa-eye-slash" id="showPassword"></i>
                 <i class="fa-solid fa-eye" id="hidePassword"></i>
             </div>
+            <p id="errorPassword"></p>
+
             <button type="submit" id="signupBtn">SignUp</button>
         </form>
         <div class="routing">

@@ -11,20 +11,19 @@
 
 <body>
     <!-- SIDE PANEL -->
-    <h1 id="menuBtn"><i class="fa-solid fa-bars"></i></h1>
+    <img id="menuBtn" alt="Profile Pic">
     <div class="side-panel" id="side-panel">
         <h1 id="closeMenuBtn">X</h1>
-        <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
-            alt="Profile" id="profilePic" class="profile-pic">
+        <img alt="Profile" id="profilePic" class="profile-pic">
         <div class="user-details">
-            <h2 id="userName">Zakir</h2>
-            <p id="userEmail">zaakiraza110@gmail.com</p>
-            <p id="userDescription">No description added</p>
+            <h2 id="userName"></h2>
+            <p id="userEmail"></p>
+            <p id="userDescription"></p>
         </div>
         <div class="stats">
             <div>
                 Blogs:
-                <span id="blogsCount">0</span>
+                <span id="blogsCount"></span>
             </div>
         </div>
         <div class="btns">
@@ -35,66 +34,34 @@
 
     <!-- INPUT OPEN MODEL -->
     <div class="post-container">
-        <div class="post-update" id="post-update">
-            <p id="open_Modal">What's on your mind?</p>
+        <div class="post-update" id="open_Modal">
+            What's on your mind?
         </div>
         <div id="allPosts">
-            <div class="content_posts">
-                <div class="profile">
-                    <div class="profile_img">
-                        <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
-                            alt="Image">
-                    </div>
-                    <div class="profile_content">
-                        <h1>Raza</h1>
-                        <h4>raaza.zaakir@gmail.com</h4>
-                    </div>
-                </div>
-                <hr>
-                <div class="post_content">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis illum cupiditate iure
-                        repellat excepturi totam suscipit sequi ipsa optio in!</p>
-                    <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
-                        alt="Image">
-                </div>
-            </div>
-            <div class="content_posts">
-                <div class="profile">
-                    <div class="profile_img">
-                        <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
-                            alt="Image">
-                    </div>
-                    <div class="profile_content">
-                        <h1>Zakir</h1>
-                        <h4>zaakiraza110@gmail.com</h4>
-                    </div>
-                </div>
-                <hr>
-                <div class="post_content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, quisquam!</p>
-                </div>
-            </div>
         </div>
     </div>
 
     <!-- POST MODAL -->
-    <!-- <div class="posting" id="postModel">
+    <div class="posting" id="postModel">
         <div class="postModel">
-            <p id="crossBtn">x</p>
+            <div id="crossBtn">x</div>
             <textarea id="postContent" rows="15" cols="80" placeholder="What's on your mind?"></textarea>
             <div class="post_opt">
-                <label for="media_file">+</label>
+                <div class="fileInputPost">
+                    <label for="media_file">+</label>
+                    <input type="file" id="media_file" hidden>
+                    <p id="ImgName"></p>
+                </div>
                 <button class="preview_post_btn" id="prevewBtn">Previw Post</button>
-                <input type="file" id="media_file" hidden>
                 <button id="postBtn">Post</button>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- POST PREVIEW MODAL -->
-    <!-- <div class="posting" id="preview_Post">
+    <div class="posting" id="preview_Post">
         <div class="preview_Post">
-            <div class="content_posts">
+            <div class="preview_content-post">
                 <div class="post_content">
                     <p id="previewText"></p>
                     <img id="previewImage" alt="Image">
@@ -102,11 +69,11 @@
                 <button id="backPreview">Back</button>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- EDIT PROFILE MODAL -->
-    <!-- <div class="posting" id="editProfile"> -->
-    <!-- <div id="editProfile">
+    <div class="posting" id="edit_profile_whole">
+        <div id="editProfile">
             <div class="input-group">
                 <input type="text" id="editName" placeholder="Name" required>
             </div>
@@ -118,7 +85,9 @@
                 <input id="editImg" type="file" required hidden>
             </div>
 
-            <img id="previwProfilePic">
+            <div class="ImgView">
+                <img id="previwProfilePic">
+            </div>
 
             <div class="input-group">
                 <textarea id="editDes" rows="6" cols="44">Description</textarea>
@@ -126,8 +95,8 @@
 
             <button type="submit" id="submitEditBtn">Save Changes</button>
             <button type="submit" id="cancelEditBtn">Cancel</button>
-        </div> -->
-    <!-- </div> -->
+        </div>
+    </div>
 
     <script src="home.js"></script>
 </body>
