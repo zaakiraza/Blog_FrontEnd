@@ -97,8 +97,8 @@ async function postSomething() {
 // GET ALL POST
 let postData = [];
 async function getAllPost() {
-    // const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/allPost`);
-    const dataPost = await fetch(`http://localhost:8000/posts/allPost`);
+    const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/allPost`);
+    // const dataPost = await fetch(`http://localhost:8000/posts/allPost`);
     const dataPostJson = await dataPost.json();
     const postMainData = dataPostJson?.data;
     if (postMainData.length == 0) {
