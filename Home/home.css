@@ -299,6 +299,10 @@ hr {
     left: 44%;
 }
 
+p#previewText {
+    line-break: anywhere;
+}
+
 
 /* EDIT PROFILE MODAL */
 #editProfile {
@@ -472,11 +476,6 @@ input[type="file"] {
         width: 80%;
         left: 9%;
     }
-
-    #preview_Post {
-        left: 3rem;
-        width: 80%;
-    }
 }
 
 @media screen and (max-width: 425px) {
@@ -490,5 +489,17 @@ input[type="file"] {
 
     .post_opt {
         flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .post-update {
+        padding: 7px;
+        font-size: 13px;
+    }
+
+    #menuBtn {
+        top: 11px;
     }
 }

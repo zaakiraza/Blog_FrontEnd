@@ -97,56 +97,14 @@ async function postSomething() {
 // GET ALL POST
 let postData = [];
 async function getAllPost() {
-    const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/allPost`);
-    // const dataPost = await fetch(`http://localhost:8000/posts/allPost`);
+    // const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/allPost`);
+    const dataPost = await fetch(`http://localhost:8000/posts/allPost`);
     const dataPostJson = await dataPost.json();
     const postMainData = dataPostJson?.data;
     if (postMainData.length == 0) {
         document.getElementById('allPosts').innerHTML = "<h1 class='noPostHeading'>No Post avaliable</h1>";
         return;
     }
-    // postMainData.forEach(async (elem) => {
-    //     const userData = await fetch(`http://localhost:8000/users/${elem?.email}`);
-    //     const userDataJson = await userData.json();
-    //     if (elem.postUrl) {
-    //         let formattedText = elem.text.replace(/\n/g, "<br>");
-    //         postData.push(`
-    //             <div class="content_posts">
-    //                 <div class="profile">
-    //                     <div class="profile_img">
-    //                         <img src="${userDataJson?.data?.imgUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
-    //                     </div>
-    //                     <div class="profile_content">
-    //                         <h1>${userDataJson?.data?.name}</h1>
-    //                         <h4>${elem?.email}</h4>
-    //                     </div>
-    //                 </div>
-    //                 <hr>
-    //                 <div class="post_content">
-    //                     <p>${formattedText}</p>
-    //                     <img src="${elem?.postUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
-    //                 </div>
-    //             </div>`)
-    //     }
-    //     else {
-    //         postData.push(`
-    //             <div class="content_posts">
-    //                 <div class="profile">
-    //                     <div class="profile_img">
-    //                         <img src="${userDataJson?.data?.imgUrl || 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg'}" alt="Image">
-    //                     </div>
-    //                     <div class="profile_content">
-    //                         <h1>${userDataJson?.data?.name}</h1>
-    //                         <h4>${elem?.email}</h4>
-    //                     </div>
-    //                 </div>
-    //                 <hr>
-    //                 <div class="post_content">
-    //                     <p>${elem?.text}</p>
-    //                 </div>
-    //             </div>`)
-    //     }
-    // });
 
     for (const elem of postMainData) {
         const userData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${elem.email}`);
