@@ -506,16 +506,14 @@ input[type="file"] {
 
 
 
-.toggleTextBtn {
-    margin-top: 8px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 6px 12px;
+.toggleTextLink {
+    color: #5a5050;
+    text-decoration: none;
     cursor: pointer;
-    border-radius: 4px;
+    font-size: 14px;
 }
 
-.toggleTextBtn:hover {
-    background-color: #0056b3;
+.toggleTextLink:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }

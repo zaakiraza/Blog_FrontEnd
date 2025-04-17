@@ -155,14 +155,14 @@ async function postSomething() {
 
 
 
-
 let postData = [];
+
 async function getAllPost() {
     const dataPost = await fetch(`https://blogbackend-6a9f.up.railway.app/posts/allPost`);
     const dataPostJson = await dataPost.json();
     const postMainData = dataPostJson?.data;
 
-    if (postMainData.length == 0) {
+    if (postMainData.length === 0) {
         document.getElementById('allPosts').innerHTML = "<h1 class='noPostHeading'>No Post available</h1>";
         return;
     }
@@ -171,10 +171,15 @@ async function getAllPost() {
         const userData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${elem.email}`);
         const userDataJson = await userData.json();
 
-        let text = elem.text;
-        let shortText = text.length > 100 ? text.slice(0, 100) + "..." : text;
-        let formattedFullText = text.replace(/\n/g, "<br>");
+        let fullText = elem.text;
+        let shortText = fullText.length > 100 ? fullText.slice(0, 100) : fullText;
+
+        let formattedFullText = fullText.replace(/\n/g, "<br>");
         let formattedShortText = shortText.replace(/\n/g, "<br>");
+
+        if (fullText.length > 100) {
+            formattedShortText += `... <a href="javascript:void(0)" class="toggleTextLink">Read more</a>`;
+        }
 
         const postHTML = `
             <div class="content_posts">
@@ -190,9 +195,8 @@ async function getAllPost() {
                 <hr>
                 <div class="post_content">
                     <p class="shortText">${formattedShortText}</p>
-                    <p class="fullText" style="display: none;">${formattedFullText}</p>
+                    <p class="fullText" style="display: none;">${formattedFullText} <a href="javascript:void(0)" class="toggleTextLink">Read less</a></p>
                     ${elem.postUrl ? `<img src="${elem.postUrl}" alt="Image">` : ""}
-                    ${text.length > 100 ? `<button class="toggleTextBtn">Read more</button>` : ""}
                 </div>
             </div>
         `;
@@ -202,27 +206,31 @@ async function getAllPost() {
 
     document.getElementById('allPosts').innerHTML = postData.join("");
 
-    // Add event listeners to all "Read more" buttons
-    document.querySelectorAll('.toggleTextBtn').forEach(button => {
-        button.addEventListener('click', function () {
-            const postContent = this.parentElement;
+    // Toggle read more / less
+    document.querySelectorAll('.toggleTextLink').forEach(link => {
+        link.addEventListener('click', function () {
+            const postContent = this.closest('.post_content');
             const shortText = postContent.querySelector('.shortText');
             const fullText = postContent.querySelector('.fullText');
+
             const isExpanded = fullText.style.display === 'block';
 
             if (isExpanded) {
                 fullText.style.display = 'none';
                 shortText.style.display = 'block';
-                this.innerText = 'Read more';
             } else {
                 fullText.style.display = 'block';
                 shortText.style.display = 'none';
-                this.innerText = 'Read less';
             }
         });
     });
 }
+
 getAllPost();
+
+
+
+
 
 
 
