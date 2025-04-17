@@ -168,6 +168,7 @@ async function getAllPost() {
     }
 
     for (const elem of postMainData) {
+        // const userData = await fetch(`http://localhost:8000/users/${elem.email}`);
         const userData = await fetch(`https://blogbackend-6a9f.up.railway.app/users/${elem.email}`);
         const userDataJson = await userData.json();
 
