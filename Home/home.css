@@ -158,7 +158,7 @@ hr {
 
 .post_content img {
     width: 99.7%;
-    height: 20.9rem;
+    /* height: 20.9rem; */
     border-bottom-right-radius: 14px;
     border-bottom-left-radius: 14px;
 }
@@ -502,4 +502,20 @@ input[type="file"] {
     #menuBtn {
         top: 11px;
     }
+}
+
+
+
+.toggleTextBtn {
+    margin-top: 8px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.toggleTextBtn:hover {
+    background-color: #0056b3;
 }
