@@ -10,8 +10,14 @@
 </head>
 
 <body>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <i class="fa-solid fa-circle-notch"></i>
+    </div>
+
+
     <!-- SIDE PANEL -->
-    <img id="menuBtn" alt="Profile Pic">
     <div class="side-panel" id="side-panel">
         <h1 id="closeMenuBtn">X</h1>
         <img alt="Profile" id="profilePic" class="profile-pic">
@@ -22,7 +28,7 @@
         </div>
         <div class="stats">
             <div>
-                Blogs:
+                Posts:
                 <span id="blogsCount"></span>
             </div>
         </div>
@@ -34,8 +40,11 @@
 
     <!-- INPUT OPEN MODEL -->
     <div class="post-container">
-        <div class="post-update" id="open_Modal">
-            What's on your mind?
+        <div class="top_Menu">
+            <img id="menuBtn" alt="Profile Pic">
+            <div class="post-update" id="open_Modal">
+                What's on your mind?
+            </div>
         </div>
         <div id="allPosts">
         </div>
@@ -46,12 +55,12 @@
         <div class="postModel">
             <div id="crossBtn">x</div>
             <textarea id="postContent" rows="15" cols="80" placeholder="What's on your mind?"></textarea>
+            <div class="fileInputPost">
+                <label for="media_file">+</label>
+                <input type="file" id="media_file" hidden>
+                <p id="ImgName"></p>
+            </div>
             <div class="post_opt">
-                <div class="fileInputPost">
-                    <label for="media_file">+</label>
-                    <input type="file" id="media_file" hidden>
-                    <p id="ImgName"></p>
-                </div>
                 <button class="preview_post_btn" id="prevewBtn">Previw Post</button>
                 <button id="postBtn">Post</button>
             </div>
@@ -90,7 +99,7 @@
             </div>
 
             <div class="input-group">
-                <textarea id="editDes" rows="6" cols="44">Description</textarea>
+                <textarea id="editDes" rows="6" cols="44" placeholder="Description"></textarea>
             </div>
 
             <button type="submit" id="submitEditBtn">Save Changes</button>

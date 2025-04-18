@@ -19,13 +19,18 @@ body {
     background: #fff;
     padding: 20px;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
     height: 100vh;
     position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
+}
+
+#closeMenuBtn {
+    display: none;
+    position: absolute;
+    right: 12px;
 }
 
 .profile-pic {
@@ -43,6 +48,7 @@ body {
 
 .user-details p {
     color: gray;
+    text-align: center;
 }
 
 .stats {
@@ -84,12 +90,28 @@ body {
 /* INPUT OPEN MODEL */
 .post-container {
     margin-left: 320px;
-    width: 55%;
+    /* width: 55%; */
+    width: 65%;
     display: flex;
     justify-content: center;
     padding: 20px;
     flex-direction: column;
     gap: 40px;
+}
+
+.top_Menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+#menuBtn {
+    display: none;
+    width: 45px;
+    height: 47px;
+    border-radius: 25px;
 }
 
 .post-update {
@@ -99,6 +121,7 @@ body {
     border-radius: 24px;
     border: 1px solid black;
     cursor: pointer;
+    width: 100%;
 }
 
 .post-update:hover {
@@ -156,9 +179,20 @@ hr {
     line-height: 1.5;
 }
 
+.toggleTextLink {
+    color: #5a5050;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.toggleTextLink:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
 .post_content img {
     width: 99.7%;
-    /* height: 20.9rem; */
     border-bottom-right-radius: 14px;
     border-bottom-left-radius: 14px;
 }
@@ -171,6 +205,8 @@ hr {
 
 .posting {
     display: none;
+    justify-content: center;
+    align-items: center;
 }
 
 #postModel,
@@ -186,14 +222,17 @@ hr {
 .postModel,
 .preview_Post,
 #editProfile {
-    width: 53%;
+    width: 50%;
     position: absolute;
     background: white;
-    left: 332px;
-    top: 12%;
     border-radius: 15px;
     padding: 0px 30px;
     transition: all 0.3s ease;
+}
+
+.preview_Post {
+    height: 95vh;
+    overflow: scroll;
 }
 
 #crossBtn {
@@ -217,27 +256,21 @@ hr {
     outline: none;
 }
 
-.post_opt {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 20px 0;
-}
-
 .fileInputPost {
     display: flex;
     align-items: center;
     gap: 7px;
+    padding-top: 10px;
 }
 
 .fileInputPost label {
-    font-size: 35px;
+    font-size: 30px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 43px;
-    border-radius: 21px;
+    width: 39px;
+    border-radius: 25px;
 }
 
 .fileInputPost label:hover {
@@ -247,7 +280,11 @@ hr {
 }
 
 #ImgName {
-    font-size: 19px;
+    font-size: 18px;
+}
+
+.post_opt {
+    margin: 20px 0;
 }
 
 #postBtn,
@@ -300,17 +337,19 @@ hr {
 }
 
 p#previewText {
-    line-break: anywhere;
+    line-break: auto;
+    /* line-break: anywhere; */
 }
 
 
 /* EDIT PROFILE MODAL */
 #editProfile {
+    height: 95vh;
+    overflow: scroll;
     background: white;
-    width: 33%;
-    left: 34%;
-    top: 4%;
-    padding: 40px 25px;
+    width: 450px;
+    padding: 20px 25px;
+    border-radius: 0;
 }
 
 
@@ -335,6 +374,7 @@ input[type="file"] {
 
 .upload-icon {
     display: inline-block;
+    cursor: pointer;
     text-align: left;
     width: 100%;
     padding: 15px 0px 15px 11px;
@@ -356,7 +396,9 @@ input[type="file"] {
 
 #previwProfilePic {
     width: 200px;
-    border-radius: 100px;
+    border-radius: 116px;
+    height: 200px;
+    overflow: hidden;
 }
 
 #submitEditBtn,
@@ -374,22 +416,35 @@ input[type="file"] {
     box-shadow: 0 4px black;
 }
 
-/* MENU BTN */
-#menuBtn {
-    display: none;
+
+/* LOADER */
+#loader {
     position: absolute;
-    top: 27px;
-    left: 10px;
-    width: 45px;
-    height: 47px;
-    border-radius: 25px;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.5);
 }
 
-#closeMenuBtn {
-    display: none;
-    position: absolute;
-    right: 12px;
+#loader i {
+    color: white;
+    font-size: 45px;
+    animation: loading 1.5s infinite;
 }
+
+@keyframes loading {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 
 /* MEDIA QUERY */
 @media screen and (max-width: 900px) {
@@ -398,72 +453,30 @@ input[type="file"] {
     }
 
     .post-container {
-        width: 60%;
-        margin-left: 290px;
+        width: 67%;
+        margin-left: 275px;
+    }
+
+    .postModel,
+    .preview_Post {
+        width: 75%;
     }
 }
 
 @media screen and (max-width: 700px) {
     .side-panel {
-        width: 230px;
+        width: 285px;
         padding: 20px 10px;
-    }
-
-    .user-details p:first-of-type {
-        font-weight: 800;
-    }
-
-    .user-details p {
-        font-size: 14px;
-        padding: 0;
-    }
-
-    .post-container {
-        width: 100%;
-        margin-left: 245px;
-    }
-
-    .profile_content h1 {
-        font-size: 21px;
-    }
-
-    .post_content p {
-        font-size: 13px;
-    }
-
-    .post_content img {
-        height: 15rem;
-    }
-
-    .postModel,
-    .preview_Post,
-    #editProfile {
-        width: 60%;
-        left: 185px;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    .side-panel {
-        width: 230px;
-        padding: 20px 10px;
-        left: -15rem;
-    }
-
-    .post-update {
-        margin-left: 45px;
+        left: -18rem;
     }
 
     .post-container {
         margin-left: 0;
+        width: 100%;
     }
 
     #menuBtn {
         display: block;
-    }
-
-    .post-update p {
-        font-size: 14px;
     }
 
     #closeMenuBtn {
@@ -471,10 +484,15 @@ input[type="file"] {
     }
 
     .postModel,
-    .preview_Post,
+    .preview_Post {
+        width: 90%;
+        /* width: 70%; */
+    }
+}
+
+@media screen and (max-width: 550px) {
     #editProfile {
-        width: 80%;
-        left: 9%;
+        width: 400px;
     }
 }
 
@@ -491,29 +509,46 @@ input[type="file"] {
         flex-wrap: wrap;
         gap: 10px;
     }
+
+    .post_content p {
+        font-size: 14px;
+    }
+
+    #editProfile {
+        width: 80%;
+    }
+
+    #previwProfilePic {
+        width: 157px;
+        height: 154px;
+    }
+
+    .postModel {
+        width: 80%;
+    }
+
+    #ImgName {
+        font-size: 15px;
+    }
 }
 
 @media screen and (max-width: 300px) {
     .post-update {
-        padding: 7px;
+        padding: 11px;
         font-size: 13px;
     }
 
-    #menuBtn {
-        top: 11px;
+    .input-group input,
+    .input-group textarea,
+    .upload-icon {
+        font-size: 12px;
     }
-}
 
+    .top_Menu {
+        gap: 9px;
+    }
 
-
-.toggleTextLink {
-    color: #5a5050;
-    text-decoration: none;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.toggleTextLink:hover {
-    color: #0056b3;
-    text-decoration: underline;
+    .side-panel {
+        width: 96%;
+    }
 }

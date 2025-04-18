@@ -34,9 +34,9 @@ async function loginHandler(e) {
     if (!isValid) return;
 
     else if (isValid) {
+        document.getElementById('loader').style.display = "flex";
         try {
-            const response = await fetch('https://blogbackend-6a9f.up.railway.app/auth/login', {
-            // const response = await fetch('http://localhost:8000/auth/login', {
+            const response = await fetch('http://localhost:8000/auth/login', {
                 method: 'POST',
                 headers: {
                     Accept: 'application.json',
@@ -50,16 +50,19 @@ async function loginHandler(e) {
             const feed = await response.json();
             if (!feed.status) {
                 alert(feed.message);
-                console.log("object")
                 loginEmail.style.border = "2px solid red";
                 loginPassword.style.border = "2px solid red";
             }
             else {
                 localStorage.setItem('loginEmail', loginEmail.value);
-                window.location.href = '../Home/home.html';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = "none";
+                    window.location.href = '../Home/home.html';
+                }, 1000);
             }
         }
         catch (e) {
+            document.getElementById('loader').style.display = "none";
             alert(e);
         }
     }

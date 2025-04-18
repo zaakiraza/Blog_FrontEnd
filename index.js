@@ -50,9 +50,9 @@ async function signupHandler(e) {
     if (!isValid) return;
 
     else if (isValid) {
+        document.getElementById('loader').style.display = "flex";
         try {
-            const checkForEmailInDB = await fetch(`https://blogbackend-6a9f.up.railway.app/auth/emailChecker/${signupEmail.value}`)
-            // const checkForEmailInDB = await fetch(`http://localhost:8000/auth/emailChecker/${signupEmail.value}`);
+            const checkForEmailInDB = await fetch(`http://localhost:8000/auth/emailChecker/${signupEmail.value}`);
             const checkForEmailInDBJson = await checkForEmailInDB.json();
             if (!checkForEmailInDBJson.status) {
                 return showError(signupEmail, 'errorEmail', 'Email Already Exist');
@@ -71,8 +71,7 @@ async function signupHandler(e) {
 
                 imgURL = await UrlSecure.json();
             }
-            const response = await fetch('https://blogbackend-6a9f.up.railway.app/auth/signup', {
-            // const response = await fetch('http://localhost:8000/auth/signup', {
+            const response = await fetch('http://localhost:8000/auth/signup', {
                 method: 'POST',
                 headers: {
                     Accept: 'application.json',
@@ -81,7 +80,7 @@ async function signupHandler(e) {
                 body: JSON.stringify({
                     signupName: signupName.value,
                     signupEmail: signupEmail.value.toLocaleLowerCase(),
-                    signUpDes: signUpDes.value || "No description added",
+                    signUpDes: signUpDes.value || "",
                     signupImgURL: imgURL.secure_url || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
                     signupPassword: signupPassword.value
                 })
@@ -91,12 +90,15 @@ async function signupHandler(e) {
                 return alert(feed.message);
             }
             else {
-                alert(feed.message);
-                window.location.href = './login/login.html';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = "none";
+                    window.location.href = './login/login.html';
+                }, 1000);
             }
         }
         catch (e) {
-            console.log(e);
+            document.getElementById('loader').style.display = "none";
+            alert(e);
         }
     }
 }
