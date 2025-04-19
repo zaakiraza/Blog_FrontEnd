@@ -49,12 +49,14 @@ async function loginHandler(e) {
             })
             const feed = await response.json();
             if (!feed.status) {
-                alert(feed.message);
+                document.getElementById('loader').style.display = "none";
+                // alert(e.message || JSON.stringify(e));
+                alert(feed.message || "Login failed");
                 loginEmail.style.border = "2px solid red";
                 loginPassword.style.border = "2px solid red";
             }
             else {
-                localStorage.setItem('loginEmail', loginEmail.value);
+                localStorage.setItem('token', feed.data);
                 setTimeout(() => {
                     document.getElementById('loader').style.display = "none";
                     window.location.href = '../Home/home.html';

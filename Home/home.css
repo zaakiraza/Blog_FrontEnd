@@ -133,6 +133,8 @@ body {
 #allPosts {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 40px;
 }
 
@@ -144,6 +146,7 @@ body {
     border: 2px solid gray;
     border-radius: 15px;
     box-shadow: 5px 5px 8px 2px gray;
+    width: 100%;
 }
 
 .profile {
@@ -429,10 +432,15 @@ input[type="file"] {
     background: rgba(0, 0, 0, 0.5);
 }
 
+.fa-circle-notch,
 #loader i {
     color: white;
     font-size: 45px;
     animation: loading 1.5s infinite;
+}
+
+.fa-circle-notch {
+    color: black;
 }
 
 @keyframes loading {

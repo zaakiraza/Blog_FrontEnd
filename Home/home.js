@@ -1,35 +1,32 @@
 // CHECK FOR LOGIN PEERSON EMAIL
-let loginPerson = localStorage.getItem('loginEmail');
-function checkLoginedUser() {
+let loginPerson = localStorage.getItem('token');
+let loginPersonEmail;
+async function checkLoginedUser() {
     if (!loginPerson) {
         alert("Please login first");
         window.location.href = '../login/login.html';
     }
+    else {
+        const verifyToken = await fetch(`http://localhost:8000/auth/JWTVerify/${loginPerson}`);
+        const verifyTokenJson = await verifyToken.json();
+        if (!verifyTokenJson.status) {
+            window.location.href = '../login/login.html';
+        }
+        loginPersonEmail = verifyTokenJson?.data?.email;
+    }
 }
-checkLoginedUser();
 
-// LOGOUT BUTTON
-document.getElementById('LogoutBtn').addEventListener("click", () => {
-    localStorage.clear("loginEmail");
-    window.location.href = '../login/login.html';
-})
 
-// LOGIN USER DATA
-
-let U_name;
-let U_email;
-let U_desc;
-let U_pic;
-
+let U_name, U_email, U_desc, U_pic;
 // GET DATA OF LOGIN PERSON
 async function UserLoginData() {
-    const loginUserData = await fetch(`http://localhost:8000/users/byEmail/${loginPerson}`);
+    const loginUserData = await fetch(`http://localhost:8000/users/byEmail/${loginPersonEmail}`);
     const loginUserDataJson = await loginUserData.json();
     const { imgUrl, name, email, description } = loginUserDataJson.data;
     U_name = name;
     U_email = email;
     U_desc = description;
-    U_pic = imgUrl;
+    U_pic = imgUrl || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg";
     let profilePic = document.getElementById('profilePic');
     let userName = document.getElementById('userName');
     let userEmail = document.getElementById('userEmail');
@@ -40,12 +37,26 @@ async function UserLoginData() {
     userDescription.innerText = U_desc || "No description added";
     document.getElementById('menuBtn').src = U_pic;
 }
-UserLoginData();
+
+async function init() {
+    await checkLoginedUser(); // wait for email to be set
+    if (loginPersonEmail) {
+        await UserLoginData();
+        await loginUserPostCount();
+    }
+}
+init();
+
+// LOGOUT BUTTON
+document.getElementById('LogoutBtn').addEventListener("click", () => {
+    localStorage.clear("loginEmail");
+    window.location.href = '../login/login.html';
+})
 
 
 async function loginUserPostCount() {
     try {
-        const loginUserPostCount = await fetch(`http://localhost:8000/posts/singlePostCount/${loginPerson}`);
+        const loginUserPostCount = await fetch(`http://localhost:8000/posts/singlePostCount/${loginPersonEmail}`);
         const loginUserPostCountJson = await loginUserPostCount.json();
         document.getElementById('blogsCount').innerText = loginUserPostCountJson.postCount;
     }
@@ -53,7 +64,6 @@ async function loginUserPostCount() {
         console.log(e)
     }
 }
-loginUserPostCount();
 
 // POST HANDLER
 let blogImgURL;
@@ -69,7 +79,7 @@ async function postSomething() {
             blogImgURL = "";
         }
         else if (media_file.value) {
-            document.getElementById('loader').style.display="flex";
+            document.getElementById('loader').style.display = "flex";
             let fileInput = media_file.files[0];
             const formData = new FormData();
             formData.append('file', fileInput);
@@ -108,6 +118,7 @@ async function postSomething() {
 let postData = [];
 
 async function getAllPost() {
+    document.getElementById('allPosts').innerHTML = `<i class="fa-solid fa-circle-notch"></i>`
     const dataPost = await fetch(`http://localhost:8000/posts/allPost`);
     const dataPostJson = await dataPost.json();
     const postMainData = dataPostJson?.data;
@@ -262,11 +273,10 @@ document.getElementById('editProfileBtn').addEventListener("click", async () => 
     document.body.style.overflow = "hidden"
     try {
         // CALL FOR LOGIN USER DATA
-        // const userData = await fetch(`http://localhost:8000/users/byEmail/${loginPerson}`);
-        // const userDataJson = await userData.json();
-        // const { description, imgUrl, name } = userDataJson.data;
+        const userData = await fetch(`http://localhost:8000/users/byEmail/${loginPersonEmail}`);
+        const userDataJson = await userData.json();
+        const { description, imgUrl, name } = userDataJson.data;
         editName.value = U_name;
-        // editImg.value = imgUrl;
         editDes.value = U_desc;
         previwProfilePic.src = U_pic;
         profilePicURLUpdated = U_pic;
@@ -284,7 +294,7 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
     }
 
     try {
-        document.getElementById('loader').style.display="flex";
+        document.getElementById('loader').style.display = "flex";
         if (editImg.files) {
             let fileInput = editImg.files[0];
             const formData = new FormData();
@@ -297,9 +307,8 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
             });
 
             profilePicURLUpdated = await response.json();
-            console.log(profilePicURLUpdated);
         }
-        const response = await fetch(`http://localhost:8000/users/${loginPerson}`, {
+        const response = await fetch(`http://localhost:8000/users/${loginPersonEmail}`, {
             method: 'PUT',
             headers: {
                 Accept: 'application.json',
@@ -313,7 +322,7 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
         })
         const feed = await response.json();
         if (!feed.status) {
-            document.getElementById('loader').style.display="none";
+            document.getElementById('loader').style.display = "none";
             window.location.reload();
         }
         else {
@@ -336,7 +345,6 @@ document.getElementById('cancelEditBtn').addEventListener("click", () => {
 let preview_profile_file;
 document.getElementById('editImg').addEventListener('change', (e) => {
     preview_profile_file = e.target.files[0];
-    console.log(preview_profile_file);
     if (preview_profile_file) {
         const reader = new FileReader();
         reader.onload = function (e) {

@@ -81,7 +81,7 @@ async function signupHandler(e) {
                     signupName: signupName.value,
                     signupEmail: signupEmail.value.toLocaleLowerCase(),
                     signUpDes: signUpDes.value || "",
-                    signupImgURL: imgURL.secure_url || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
+                    signupImgURL: imgURL.secure_url || "",
                     signupPassword: signupPassword.value
                 })
             })
