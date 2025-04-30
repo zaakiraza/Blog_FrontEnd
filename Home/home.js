@@ -72,7 +72,8 @@ async function postSomething() {
     let postContent = document.getElementById('postContent');
     let media_file = document.getElementById('media_file');
     if (!postContent.value) {
-        return alert("Can't Post Empty");
+        postContent.style.border = '2px solid red';
+        return alert("Must write something to post");
     }
     try {
         if (!media_file.value) {
@@ -91,7 +92,9 @@ async function postSomething() {
             });
             blogImgURL = await blogPostUrl.json();
         }
-        const response = await fetch('http://localhost:8000/posts', {
+
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:8000/posts/${token}`, {
             method: 'POST',
             headers: {
                 Accept: 'application.json',
@@ -100,19 +103,27 @@ async function postSomething() {
             body: JSON.stringify({
                 postText: postContent.value,
                 postImgUrl: blogImgURL.secure_url,
-                posterEmail: loginPerson
+                posterEmail: loginPersonEmail
             })
         })
         const feed = await response.json();
         if (feed.status) {
             window.location.reload();
         }
+        else {
+            document.getElementById('loader').style.display = "none";
+            alert(feed?.message)
+        }
     }
     catch (e) {
+        document.getElementById('loader').style.display = "none";
         alert(e);
     }
 }
 
+document.getElementById('postContent').addEventListener('change', () => {
+    document.getElementById('postContent').style.border = '1px solid black';
+})
 
 // GET ALL POST
 let postData = [];
@@ -178,8 +189,30 @@ async function getAllPost() {
                     <p class="fullText" style="display: none;">${formattedFullText} <a href="javascript:void(0)" class="toggleTextLink">Read less</a></p>
                     ${elem.postUrl ? `<img src="${elem.postUrl}" alt="Image">` : ""}
                 </div>
-            </div>
-        `;
+                <div class="social-post-card">
+                    <div class="reaction-counts">
+                        <div>👍 120 Likes</div>
+                        <div>💬 45 Comments</div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-btn">
+                            <i class="fa-regular fa-thumbs-up"></i>
+                            <span>Like</span>
+                        </div>
+
+                        <div class="action-btn">
+                            <i class="fa-solid fa-comment"></i>
+                            <span>Comment</span>
+                        </div>
+
+                        <div class="action-btn">
+                            <i class="fa-solid fa-share-nodes"></i>
+                            <span>Share</span>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
 
         postData.push(postHTML);
     }

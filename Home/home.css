@@ -90,7 +90,6 @@ body {
 /* INPUT OPEN MODEL */
 .post-container {
     margin-left: 320px;
-    /* width: 55%; */
     width: 65%;
     display: flex;
     justify-content: center;
@@ -196,9 +195,50 @@ hr {
 
 .post_content img {
     width: 99.7%;
-    border-bottom-right-radius: 14px;
-    border-bottom-left-radius: 14px;
 }
+
+
+/* POST LIKE */
+.social-post-card {
+    padding: 16px 16px 0 16px;
+}
+
+.reaction-counts {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 60px;
+    border-top: 1px solid #ccc;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #555;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.action-btn:hover {
+    color: #0073b1;
+}
+
+.action-btn i {
+    font-size: 18px;
+    fill: currentColor;
+}
+
+
 
 
 /* POST MODAL */
@@ -274,6 +314,8 @@ hr {
     align-items: center;
     width: 39px;
     border-radius: 25px;
+    border: 1px solid white;
+    background-color: white;
 }
 
 .fileInputPost label:hover {
@@ -537,6 +579,12 @@ input[type="file"] {
 
     #ImgName {
         font-size: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .action-btn span {
+        display: none;
     }
 }
 

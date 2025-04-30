@@ -58,6 +58,14 @@ async function signupHandler(e) {
                 return showError(signupEmail, 'errorEmail', 'Email Already Exist');
             }
 
+            const checkForNameInDB = await fetch(`http://localhost:8000/users/byName/${signupName.value}`);
+            const checkForNameInDBJson = await checkForNameInDB.json();
+            console.log(checkForEmailInDBJson);
+            if(!checkForNameInDBJson.status){
+                document.getElementById('loader').style.display = "none";
+                return showError(signupName, 'errorName', 'Name has already been taken');
+            }
+
             if (signUpImg.value) {
                 let fileInput = signUpImg.files[0];
                 const formData = new FormData();
@@ -127,12 +135,14 @@ signupName.addEventListener("change", () => {
         document.getElementById('errorName').innerText = "";
     }
 })
+
 signupEmail.addEventListener("change", () => {
     if (signupEmail.value) {
         signupEmail.style.border = "1px solid #ccc";
         document.getElementById('errorEmail').innerText = "";
     }
 })
+
 signupPassword.addEventListener("change", () => {
     if (signupPassword.value) {
         signupPassword.style.border = "1px solid #ccc";
