@@ -61,7 +61,7 @@ async function signupHandler(e) {
             const checkForNameInDB = await fetch(`http://localhost:8000/users/byName/${signupName.value}`);
             const checkForNameInDBJson = await checkForNameInDB.json();
             console.log(checkForEmailInDBJson);
-            if(!checkForNameInDBJson.status){
+            if (!checkForNameInDBJson.status) {
                 document.getElementById('loader').style.display = "none";
                 return showError(signupName, 'errorName', 'Name has already been taken');
             }

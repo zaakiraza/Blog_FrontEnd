@@ -82,37 +82,58 @@ async function postSomething() {
         else if (media_file.value) {
             document.getElementById('loader').style.display = "flex";
             let fileInput = media_file.files[0];
+            const fileType = fileInput.name.split('.')[1];
             const formData = new FormData();
             formData.append('file', fileInput);
             formData.append('upload_preset', "fireBase1");
-            formData.append("folder", "Blogs");
-            const blogPostUrl = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
+            if (fileType == "jpg" || fileType == "png" || fileType == "gif" || fileType == "jpeg") {
+                formData.append("folder", "Blogs/Pics");
+                const blogPostUrl = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                blogImgURL = await blogPostUrl.json();
+            }
+            else if (fileType == "mp4") {
+                formData.append("folder", "Blogs/videos");
+                const blogPostUrl = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/video/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                blogImgURL = await blogPostUrl.json();
+            }
+            else if (fileType == "pdf") {
+                formData.append("folder", "Blogs/Pdfs");
+                const blogPostUrl = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                blogImgURL = await blogPostUrl.json();
+            }
+            else {
+                alert("Invalid Format type");
+            }
+            const token = localStorage.getItem('token');
+            const response = await fetch(`http://localhost:8000/posts/${token}`, {
                 method: 'POST',
-                body: formData
-            });
-            blogImgURL = await blogPostUrl.json();
-        }
-
-        const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:8000/posts/${token}`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application.json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                postText: postContent.value,
-                postImgUrl: blogImgURL.secure_url,
-                posterEmail: loginPersonEmail
+                headers: {
+                    Accept: 'application.json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postText: postContent.value,
+                    postImgUrl: blogImgURL.secure_url,
+                    posterEmail: loginPersonEmail
+                })
             })
-        })
-        const feed = await response.json();
-        if (feed.status) {
-            window.location.reload();
-        }
-        else {
-            document.getElementById('loader').style.display = "none";
-            alert(feed?.message)
+            const feed = await response.json();
+            if (feed.status) {
+                window.location.reload();
+            }
+            else {
+                document.getElementById('loader').style.display = "none";
+                alert(feed?.message)
+            }
         }
     }
     catch (e) {
@@ -187,34 +208,44 @@ async function getAllPost() {
                 <div class="post_content">
                     <p class="shortText">${formattedShortText}</p>
                     <p class="fullText" style="display: none;">${formattedFullText} <a href="javascript:void(0)" class="toggleTextLink">Read less</a></p>
-                    ${elem.postUrl ? `<img src="${elem.postUrl}" alt="Image">` : ""}
+
+                    ${elem.postUrl ?
+                elem.postUrl.endsWith(".jpg") || elem.postUrl.endsWith(".jpeg") || elem.postUrl.endsWith(".png") || elem.postUrl.endsWith(".gif") ?
+                    `<img src="${elem.postUrl}" alt="Image">` :
+                    elem.postUrl.endsWith(".mp4") ?
+                        `<video controls src="${elem.postUrl}"></video>` :
+                        elem.postUrl.endsWith(".pdf") ?
+                            `<iframe src="${elem.postUrl}"></iframe>` :
+                            "" : ""}
+                </div >
+        <div class="social-post-card">
+            <div class="reaction-counts">
+                <div>👍 120 Likes</div>
+                <div>💬 45 Comments</div>
+            </div>
+
+            <div class="post-actions">
+                <div class="action-btn">
+                    <i class="fa-regular fa-thumbs-up"></i>
+                    <span>Like</span>
                 </div>
-                <div class="social-post-card">
-                    <div class="reaction-counts">
-                        <div>👍 120 Likes</div>
-                        <div>💬 45 Comments</div>
-                    </div>
 
-                    <div class="post-actions">
-                        <div class="action-btn">
-                            <i class="fa-regular fa-thumbs-up"></i>
-                            <span>Like</span>
-                        </div>
-
-                        <div class="action-btn">
-                            <i class="fa-solid fa-comment"></i>
-                            <span>Comment</span>
-                        </div>
-
-                        <div class="action-btn">
-                            <i class="fa-solid fa-share-nodes"></i>
-                            <span>Share</span>
-                        </div>
-                    </div>
+                <div class="action-btn">
+                    <i class="fa-solid fa-comment"></i>
+                    <span>Comment</span>
                 </div>
-            </div>`;
+
+                <div class="action-btn">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span>Share</span>
+                </div>
+            </div>
+        </div>
+            </div > `;
 
         postData.push(postHTML);
+
+        // ${elem.postUrl ? `<img src="${elem.postUrl}" alt="Image">` : ""}
     }
 
     document.getElementById('allPosts').innerHTML = postData.join("");
@@ -263,8 +294,15 @@ document.getElementById('media_file').addEventListener('change', (e) => {
     if (preview_file) {
         const reader = new FileReader();
         reader.onload = function (e) {
-            document.getElementById('previewImage').style.display = "block";
-            document.getElementById('previewImage').src = e.target.result;
+            if (media_file.files[0].name.endsWith(".jpg") || media_file.files[0].name.endsWith(".jpeg") || media_file.files[0].name.endsWith(".png") || media_file.files[0].name.endsWith(".gif")) {
+                document.getElementById('post_content').innerHTML+=`<img id="previewImage" src="${e.target.result}">`
+            }
+            else if (media_file.files[0].name.endsWith(".mp4")) {
+                document.getElementById('post_content').innerHTML += `<video src="${e.target.result}" id="previewImage" controls></video>`
+            }
+            else if (media_file.files[0].name.endsWith(".pdf")) {
+                document.getElementById('post_content').innerHTML += `<iframe src="${e.target.result}" id="previewImage"></iframe>`
+            }
             document.getElementById('ImgName').innerText = media_file.files[0].name;
         };
         reader.readAsDataURL(preview_file);
@@ -359,8 +397,8 @@ document.getElementById('submitEditBtn').addEventListener("click", async () => {
             window.location.reload();
         }
         else {
-            alert(feed.message)
-            window.location.reload();
+            //     alert(feed.message)
+            //     window.location.reload();
         }
     }
     catch (e) {

@@ -193,8 +193,12 @@ hr {
     text-decoration: underline;
 }
 
-.post_content img {
+.post_content img,.post_content video,.post_content iframe {
     width: 99.7%;
+}
+
+.post_content iframe{
+    height: 35rem;
 }
 
 
@@ -209,6 +213,7 @@ hr {
     color: #666;
     font-size: 14px;
     margin-bottom: 10px;
+    padding: 0 18px;
 }
 
 .post-actions {
@@ -369,7 +374,7 @@ hr {
 }
 
 #previewImage {
-    display: none;
+    /* display: none; */
     border-top: 2px solid black;
     border-bottom: 2px solid black;
     border-radius: 0;
